@@ -1,6 +1,6 @@
 #Bingo Board Generator
 
-This is a working scaffold that you can use to generate 5x5 bingo boards. The boards are totally plain, so styling is up to you using css. 
+This is a working scaffold that you can use to generate 5x5 bingo boards. Each board takes 24 inputs + text for the center free space spot. Each of the 24 inputs are randomly shuffled and placed the board. This means that user can generate a set of unique boards. The boards are totally plain, so styling is up to you using css. 
 
 ## Divs
 
