@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Strict//EN">
+
+<html>
+	<head>
+		<title>Miles Generator For A Bingo Board</title>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+		<script type="text/javascript">
+
+		$(document).ready(function() {
+			display_fields();
+
+			function init() {
+		        if (localStorage["students"])
+		            $('#students').val(localStorage["students"]);
+		       	if (localStorage["title"])
+		            $('#title').val(localStorage["title"]);
+		        if (localStorage["freespace"])
+		            $('#freespace').val(localStorage["freespace"]);
+		        var num_inputs = 24;
+		        for (var item = 1; item <= num_inputs; item++) {
+		        	if (localStorage["item"+item]) 
+		            	$('#item'+item).val(localStorage["item"+item]);
+		        }        
+			}
+
+			init();
+
+			$('.stored').keyup(function () {
+		        localStorage[$(this).attr('id')] = $(this).val();
+				});
+		});
+
+		function display_fields() {
+			var num_inputs = 24;
+			var html_string = "";
+			for (var item = 1; item <= num_inputs; item++) {
+				html_string += "<div>";
+				html_string += "<input class = 'stored' id = 'item" + item + "' placeholder = 'Enter A Brad Meme!' />";
+			}
+			html_string += "<br/><button class = 'submit'>Submit</button>";
+			$('.bingo_inputs').html(html_string);
+		}
+
+		</script>
+
+		<style type="text/css">
+
+			body {
+
+			}
+
+  		</style>
+	</head>
+
+	<body>
+ 		<form name="bingo_submits" method="post" action="card.html">
+ 			<label>Title for the bing board: </label>
+			<input class = "stored" id = "title" />
+			<br/>
+			<label>How many students are in the class (number of unique boards to be generated)?</label>
+			<input class = "stored" id = "students" />
+			<br/>
+			<label>Enter the text for the free space in the center of each board: </label>
+			<input class = "stored" id = "freespace" />
+			<br/>
+			<div>Enter 24 different memes, each of which will be a box on the bingo board.</div>
+			<div class = "bingo_inputs">
+			</div>
+		</form>
+</html>	

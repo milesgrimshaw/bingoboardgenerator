@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 5.0 Strict//EN">
+
+<html>
+	<head>
+		<title>Miles Generator For A Bingo Board</title>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+		<script type="text/javascript">
+
+		 function init() {      
+	        var num_boards = localStorage["students"];
+	        var num_spaces = 25;
+	        var num_items = num_spaces -1;
+
+	        var itemlist = new Array();
+			for (var i = 1; i <= num_items; i++) {
+				itemlist[i] = i;
+			}
+
+	        //Print Number Of Boards
+		   	for (var i = 1; i <= num_boards; i++) {
+
+				shuffle(itemlist);
+
+		   		var board = document.createElement("div");
+		   		$(board).addClass("board");
+		   		$('body').append(board);
+		   		var header = document.createElement("div");
+		   		$(header).addClass("header");
+		   		$(header).html(localStorage["title"]);
+		   		//$(header).html("BINGO BRAD BONANZA");
+		   		$(board).append(header);
+		   		
+		   		//Add all the bingo items to the board
+		   		for (var j = 1; j <= num_spaces; j++) {
+		   			//There are 24 user submitted items
+		   			//If j=13 text is set. So when j>13 subtract 1
+		   			var item_index = j;
+		   			if (j>13)
+		   				item_index = j-1;
+		   			var item_to_add = itemlist[item_index];
+		   			var item = document.createElement("div");
+		   			$(item).addClass("square")
+		   			var text;
+		   			//if this is the 13th block it is center and want special text
+		   			if (j == 13)
+		   				text = localStorage["freespace"];
+		   			else
+		   				text = localStorage["item"+item_to_add];
+		   			$(item).html(text);
+		   			$(board).append(item);
+		   		}
+		   	}
+		}
+
+		function shuffle ( itemlist ) {
+		  var j, tempi, tempj;
+		  //length of spaces is num_spaces+1
+		  for (var i = 1; i < itemlist.length; i++) {
+		  	//spaces.length = 26
+		  	//spaces.length - i will range from 25 (i = 1) to 1 (i=25)
+		  	//therefore j will range from 24-0 to 0
+		  	j = Math.floor( Math.random() * (itemlist.length - i) );
+		  	//Want random number 1-25. 
+		  	//We also always want it to be bounded at 25 and not start until i.
+		  	//+i means it runs from i-25. 
+		  	//We are going to swap i with j, so sometimes i will remain in place if i=j 
+		  	j = j+i;
+		  	tempi = itemlist[i];
+		  	tempj = itemlist[j];
+		  	itemlist[i] = tempj;
+		  	itemlist[j] = tempi;
+		  }
+		}
+
+		</script>
+
+		<style type="text/css">
+
+			/*
+			670 W page for printing
+			*/
+			body {
+
+			}
+
+			.board {
+				width: 540px;
+				height: 790px;
+				margin: 100px 50px 400px 50px;
+				border: solid 10px;
+				border-right: solid 11px;
+				border-color: red;
+				background-color: transparent;
+				float: none;
+			}
+
+			
+
+			.square {
+				height:110px;
+				width: 100px;
+				float: left;
+				text-align: center;
+				border-top: solid 1px;
+				border-left: solid 1px;
+				border-color: red;
+				padding: 3px;
+				padding-top: 5px;
+				text-align: center;
+				
+			}
+
+			/*first 5 elements*/
+			.square:nth-child(-n+6) {
+				margin-top: -30px;
+				/*border-left: ;*/
+			}
+
+			/*all left column elements */
+			.square:nth-child(5n+2) {				
+				margin-left: -2px;
+				padding-left: 5px;
+				border-left: none;
+			}
+
+			/*The right column*/
+			.square:nth-child(5n+1) {
+				padding-right: 11px;
+				margin-right: -2px;
+			}
+
+			.board .header {
+				height: 200px;
+				font-size: 50px;
+				text-align: center;
+				padding: 30px 0px 0px 20px;
+				font-style: italic;
+				color: blue;
+			}
+
+  		</style>
+
+	</head>
+
+	<body onload="init();">
+
+	</body>
+
+</html>	
